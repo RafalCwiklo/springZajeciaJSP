@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -38,7 +40,22 @@ public class StudentsController {
        service.addStudent(student);
         return new RedirectView("/students");
     }
-
+    @GetMapping("/editStudent/{id}")
+    public String getEditStudent(@PathVariable("id") Long id, Model model) {
+        StudentModel student = service.getStudentById(id);
+        model.addAttribute("studentModel", student);
+        return "/persons/editPerson";
+    }
+    @PostMapping("/addStudent/{id}")
+    public RedirectView postEditStudent(StudentModel editStudent) {
+        service.saveEditStudent(editStudent);
+        return new RedirectView("/addStudent/{id}");
+    }
+    @PostMapping("/editStudent/{id}")
+    public RedirectView deleteStudent(@PathVariable("id") Long id) {
+        service.deleteStudent(id);
+        return new RedirectView("/student");
+    }
 
 }
 

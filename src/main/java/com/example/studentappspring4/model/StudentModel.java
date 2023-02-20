@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,5 +29,11 @@ public class StudentModel {
     @Size(min = 3)
     private String start;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,
+            mappedBy = "studentModel"
+            //, fetch = FetchType.EAGER//zachłanne pobieranie danych,
+            // FetchType.LAZY - odracza inicjalizacje obiektów do momentu aż będą potrzebne
+    )
+    private Set<TaskModel> tasks = new HashSet<>();
 
 }
